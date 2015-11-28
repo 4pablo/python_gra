@@ -23,7 +23,6 @@ i=0
 p=-600
 iloscDrzew=0
 
-#sadasdasdasd
 
 #clock=pygame.time.Clock()
 # 4 - keep looping through
