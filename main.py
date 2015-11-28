@@ -38,12 +38,7 @@ while 1:
     i=i+1
     if j>szybkosc*5:
         j=0
-    #elif i>szybkosc:
-        #if j<30 and j<0:
-            #j=j+30
-        #elif j>300 and j>0:
-            #j=j-30;
-        #screen.blit(paski, (0,j))
+
     screen.blit(auto, (pozycjaX,pozycjaY))
 
     screen.blit(drzewo, (0,-500))
