@@ -23,6 +23,7 @@ mapa = pygame.image.load("images/droga.jpg")
 auto = pygame.image.load("images/auto.png")
 paski = pygame.image.load("images/paski.png")
 drzewo = pygame.image.load("images/drzewa.png")
+auto2 = pygame.image.load("images/auto2.png")
 pozycjaX = 440
 pozycjaY = 460
 szybkosc = 20
@@ -30,6 +31,7 @@ j=0
 i=0
 k=0
 l=0
+pas=0
 czas = 0.0
 
 paliwo = 10 #czas w sekundach
@@ -49,6 +51,7 @@ while 1:
        # elif paliwo == 0:
             #ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo".format(czas), "Wynik", 0)
             #pygame.quit()
+
     # animacja pasow na drodze
     if i==szybkosc/3:
         j=j+szybkosc/3
@@ -57,6 +60,7 @@ while 1:
     i=i+1
     if j>szybkosc*5:
         j=0
+
     #animacja drzew
     if l==szybkosc:
         k=k+szybkosc
@@ -67,9 +71,17 @@ while 1:
     screen.blit(drzewo, (0,k-1100))
 
     screen.blit(auto, (pozycjaX,pozycjaY))
+
     clock.tick(60)
-
-
+    pas=randint(0,5)
+    if pas==0:
+        screen.blit(auto2, (120,0))
+    elif pas==1:
+        screen.blit(auto2, (240,0))
+    elif pas==2:
+        screen.blit(auto2, (360,0))
+    elif pas==3:
+        screen.blit(auto2, (480,0))
 
 
     # 7 - update the screen
