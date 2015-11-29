@@ -30,7 +30,6 @@ j=0
 i=0
 k=0
 l=0
-iloscDrzew=0
 czas = 0.0
 
 paliwo = 10 #czas w sekundach
