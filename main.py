@@ -79,11 +79,11 @@ while 1:
     for event in pygame.event.get():
 
         #paliwo
-        #if event.type == USEREVENT+1:
-            #paliwo -= 1
+        if pygame.time.get_ticks()==100000:
+            ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo", "Wynik", 0)
+            pygame.quit()
         #elif paliwo == 0:
-            #ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo", "Wynik", 0)
-            #pygame.quit()
+
 
         if event.type == pygame.KEYDOWN:
             if event.key==K_LEFT:
@@ -100,7 +100,7 @@ while 1:
 
         if event.type==pygame.QUIT:
             # Czas i punkty.
-            ctypes.windll.user32.MessageBoxA(0, "Twoj czas to: {0:.2f} ".format(pygame.time.get_ticks()/1000), "Wynik", 0)
+            ctypes.windll.user32.MessageBoxA(0, "Twoj czas to: {0:.2f} s. ".format(pygame.time.get_ticks()/1000), "Wynik", 0)
             # if it is quit the game
             pygame.quit()
             exit(0)
