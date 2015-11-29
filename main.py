@@ -136,7 +136,8 @@ while 1:
 
         if event.type==pygame.QUIT:
             # Czas i punkty.
-            ctypes.windll.user32.MessageBoxA(0, "Twoj wynik to: {0:.2f} sekundy".format(czas), "Wynik", 0)
+            ctypes.windll.user32.MessageBoxA(0, "Twoj czas to: {0:.2f} s. ".format(pygame.time.get_ticks()/1000), "Wynik", 0)
             # if it is quit the game
             pygame.quit()
             exit(0)
+
