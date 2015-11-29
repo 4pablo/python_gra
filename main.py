@@ -7,7 +7,7 @@ import random
 from pygame.locals import *
 from random import randint
 #jakies gowno do mesedzboksow
-import ctypes  # An included library with Python install.
+import ctypes
 
 
 # 2 - Initialize the game
@@ -17,13 +17,12 @@ screen=pygame.display.set_mode((width, height))
 pygame.display.set_caption('Samochody')
 clock = pygame.time.Clock()
 
-
 # 3 - Load images
 mapa = pygame.image.load("images/droga.jpg")
 auto = pygame.image.load("images/auto.png")
 paski = pygame.image.load("images/paski.png")
 drzewo = pygame.image.load("images/drzewa.png")
-auto2 = pygame.image.load("images/auto3.png")
+auto2 = pygame.image.load("images/auto2.png")
 pozycjaX = 440
 pozycjaY = 460
 szybkosc = 20
@@ -32,7 +31,6 @@ i=0
 k=0
 l=0
 pas=0
-czas = 0.0
 
 paliwo = 10 #czas w sekundach
 pygame.time.set_timer(USEREVENT+1, 1000)#1 sekunda=1000milisekund
@@ -43,14 +41,6 @@ while 1:
     screen.fill(0)
     # 6 - draw the screen elements
     screen.blit(mapa, (0,0))
-    #paliwo
-
-    #for event in pygame.event.get():
-        #if event.type == USEREVENT+1:
-            #paliwo -= 1
-       # elif paliwo == 0:
-            #ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo".format(czas), "Wynik", 0)
-            #pygame.quit()
 
     # animacja pasow na drodze
     if i==szybkosc/3:
@@ -72,7 +62,6 @@ while 1:
 
     screen.blit(auto, (pozycjaX,pozycjaY))
 
-    clock.tick(60)
     pas=randint(0,5)
     if pas==0:
         screen.blit(auto2, (120,0))
@@ -88,6 +77,14 @@ while 1:
     pygame.display.flip()
     # 8 - loop through the events
     for event in pygame.event.get():
+
+        #paliwo
+        #if event.type == USEREVENT+1:
+            #paliwo -= 1
+        #elif paliwo == 0:
+            #ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo", "Wynik", 0)
+            #pygame.quit()
+
         if event.type == pygame.KEYDOWN:
             if event.key==K_LEFT:
                 if pozycjaX>120:
@@ -103,7 +100,7 @@ while 1:
 
         if event.type==pygame.QUIT:
             # Czas i punkty.
-            ctypes.windll.user32.MessageBoxA(0, "Twoj wynik to: {0:.2f} sekundy".format(czas), "Wynik", 0)
+            ctypes.windll.user32.MessageBoxA(0, "Twoj czas to: {0:.2f} ".format(pygame.time.get_ticks()/1000), "Wynik", 0)
             # if it is quit the game
             pygame.quit()
             exit(0)
