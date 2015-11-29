@@ -28,7 +28,8 @@ pozycjaY = 460
 szybkosc = 20
 j=0
 i=0
-p=-600
+k=0
+l=0
 iloscDrzew=0
 czas = 0.0
 
@@ -46,9 +47,9 @@ while 1:
     for event in pygame.event.get():
         if event.type == USEREVENT+1:
             paliwo -= 1
-        elif paliwo == 0:
-            ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo".format(czas), "Wynik", 0)
-            pygame.quit()
+       # elif paliwo == 0:
+            #ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo".format(czas), "Wynik", 0)
+            #pygame.quit()
     # animacja pasow na drodze
     if i==szybkosc/3:
         j=j+szybkosc/3
@@ -57,11 +58,19 @@ while 1:
     i=i+1
     if j>szybkosc*5:
         j=0
+    #animacja drzew
+    if l==szybkosc:
+        k=k+szybkosc
+        l=0
+    l=l+1
+    if k>szybkosc*85:
+        k=0
+    screen.blit(drzewo, (0,k-1100))
 
     screen.blit(auto, (pozycjaX,pozycjaY))
     clock.tick(60)
 
-    screen.blit(drzewo, (0,-500))
+
 
 
     # 7 - update the screen
