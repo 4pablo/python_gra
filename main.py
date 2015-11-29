@@ -79,9 +79,9 @@ while 1:
     for event in pygame.event.get():
 
         #paliwo
-        if pygame.time.get_ticks()==100000:
-            ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo", "Wynik", 0)
-            pygame.quit()
+        #if pygame.time.get_ticks()==100000:
+            #ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo", "Wynik", 0)
+            #pygame.quit()
         #elif paliwo == 0:
 
 
