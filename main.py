@@ -23,7 +23,7 @@ mapa = pygame.image.load("images/droga.jpg")
 auto = pygame.image.load("images/auto.png")
 paski = pygame.image.load("images/paski.png")
 drzewo = pygame.image.load("images/drzewa.png")
-#auto2 = pygame.image.load("images/auto2.png")
+auto2 = pygame.image.load("images/auto3.png")
 pozycjaX = 440
 pozycjaY = 460
 szybkosc = 20
@@ -31,16 +31,8 @@ j=0
 i=0
 k=0
 l=0
-m=0
 pas=0
 czas = 0.0
-iloscAut=0
-czasPojawianiaAut=20
-autoGraf=0
-autoPas=0
-statusAuta = 0
-autoPozY=-150
-autoSzybkosc=20
 
 paliwo = 10 #czas w sekundach
 pygame.time.set_timer(USEREVENT+1, 1000)#1 sekunda=1000milisekund
@@ -74,58 +66,33 @@ while 1:
         k=k+szybkosc
         l=0
     l=l+1
-    if k>szybkosc*90:
+    if k>szybkosc*85:
         k=0
     screen.blit(drzewo, (0,k-1100))
 
     screen.blit(auto, (pozycjaX,pozycjaY))
 
-    #clock.tick(60)
+    clock.tick(60)
+    pas=randint(0,5)
+    if pas==0:
+        screen.blit(auto2, (120,0))
+    elif pas==1:
+        screen.blit(auto2, (240,0))
+    elif pas==2:
+        screen.blit(auto2, (360,0))
+    elif pas==3:
+        screen.blit(auto2, (480,0))
 
-    #if iloscAut<4 and czasPojawianiaAut==0:
-        #pas=randint(0,4)
-        #if pas==0:
-            #screen.blit(auto2, (120,0))
-        #elif pas==1:
-            #screen.blit(auto2, (280,0))
-        #elif pas==2:
-            #screen.blit(auto2, (460,0))
-        #elif pas==3:
-            #screen.blit(auto2, (600,0))
-        #iloscAut=iloscAut+1
-    #czasPojawianiaAut=czasPojawianiaAut-1
 
-    if statusAuta==0:
-        autoPozY=-150;
-        autoGraf = randint(2,6)
-        auto2 = pygame.image.load("images/auto"+str(autoGraf)+".png")
-        pas=randint(0,3)
-        if pas==0:
-            autoPas=120
-        elif pas==1:
-            autoPas=280
-        elif pas==2:
-            autoPas=460
-        elif pas==3:
-            autoPas=600
-        statusAuta=1
-    if autoPozY>600:
-        statusAuta=0
-    if m<autoSzybkosc/2:
-        autoPozY=autoPozY+autoSzybkosc/2
-    elif m>autoSzybkosc/2:
-        m=0
-    m=m+1
-    screen.blit(auto2, (autoPas,autoPozY))
     # 7 - update the screen
     pygame.display.flip()
     # 8 - loop through the events
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key==pygame.K_LEFT:
+            if event.key==K_LEFT:
                 if pozycjaX>120:
                     pozycjaX=pozycjaX-20
-            elif event.key==pygame.K_RIGHT:
+            elif event.key==K_RIGHT:
                 if pozycjaX<620:
                     pozycjaX=pozycjaX+20
             elif event.key == pygame.K_ESCAPE:
