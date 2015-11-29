@@ -45,9 +45,9 @@ while 1:
     screen.blit(mapa, (0,0))
     #paliwo
 
-    for event in pygame.event.get():
-        if event.type == USEREVENT+1:
-            paliwo -= 1
+    #for event in pygame.event.get():
+        #if event.type == USEREVENT+1:
+            #paliwo -= 1
        # elif paliwo == 0:
             #ctypes.windll.user32.MessageBoxA(0, "Skonczylo sie paliwo".format(czas), "Wynik", 0)
             #pygame.quit()
