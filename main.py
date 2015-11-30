@@ -30,6 +30,10 @@ paski = pygame.image.load("images/paski.png")
 drzewo = pygame.image.load("images/drzewa.png")
 paliwo = pygame.image.load("grafika/gas.png")
 paliwo = pygame.transform.scale(paliwo, (64, 64))
+glosnik = pygame.image.load("grafika/audio.png")
+krzyzyk = pygame.image.load("grafika/off.png")
+wycisz = False
+oczekuj = False
 
 #auto2 = pygame.image.load("images/auto2.png")
 pozycjaX = 440
@@ -53,6 +57,8 @@ paliwoX=0
 paliwoY=0
 statusPaliwa = False
 predkoscPaliwa = 0
+bonusTimeX = 0
+bonusTimeY = 0
 
 koniec = False
 wyjdz = False
@@ -66,7 +72,7 @@ showTime = False
 while 1:
     while koniec == False:
         # 5 - clear the screen before drawing it again
-        screen.fill(0)
+        #screen.fill(0)
         # 6 - draw the screen elements
         screen.blit(mapa, (0,0))
         #paliwo
@@ -175,6 +181,27 @@ while 1:
             addTime = font.render("+5", 1, (255, 0, 255))
             screen.blit(addTime, (paliwoX, paliwoY))
 
+        screen.blit(glosnik, (735,5))
+        x, y = pygame.mouse.get_pos()
+
+        if x > 743 and x < 760 and y > 9 and y < 35 and pygame.mouse.get_pressed()[0] and wycisz == False:
+            oczekuj = True
+        elif x > 743 and x < 760 and y > 9 and y < 35 and pygame.mouse.get_pressed()[0] and wycisz == True :
+            oczekuj = False
+
+        if oczekuj and pygame.mouse.get_pressed()[0] == 0:
+            wycisz = True
+        if oczekuj == False and pygame.mouse.get_pressed()[0] == 0:
+            wycisz = False
+
+        if wycisz:
+            screen.blit(krzyzyk, (735,5))
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.unpause()
+
+
+
         # 7 - update the screen
         pygame.display.flip()
         # 8 - loop through the events
@@ -194,7 +221,7 @@ while 1:
 
             if event.type==pygame.QUIT:
                 # Czas i punkty.
-                ctypes.windll.user32.MessageBoxA(0, "Twoj czas to: {0:.2f} s. ".format(pygame.time.get_ticks()/1000), "Wynik", 0)
+                #ctypes.windll.user32.MessageBoxA(0, "Twoj czas to: {0:.2f} s. ".format(pygame.time.get_ticks()/1000), "Wynik", 0)
                 # if it is quit the game
                 pygame.quit()
                 exit(0)
@@ -209,11 +236,12 @@ while 1:
 
 
         #debug
+        #print pygame.mouse.get_pos()
+        #print pygame.mouse.get_pressed()
         #print "auto: %s" % pozycjaY
         #print "auto2: %s" % autoPozY
 
     if time == 0:
-        font = pygame.font.Font("ARCADECLASSIC.TTF", 30)
         timeMessage = font.render("00", 1, (255,255,255), (0, 0, 0))
         screen.blit(timeMessage, (30, 30))
 
@@ -240,5 +268,6 @@ while 1:
 
             if event.key==pygame.K_ESCAPE:
                 pygame.quit()
+                exit(0)
 
 
