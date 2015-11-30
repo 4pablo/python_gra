@@ -9,6 +9,12 @@ from random import randint
 #jakies gowno do mesedzboksow
 import ctypes  # An included library with Python install.
 
+file = 'muzyka.mp3'
+pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load(file)
+pygame.mixer.music.play()
+
 
 # 2 - Initialize the game
 pygame.init()
@@ -151,8 +157,11 @@ while 1:
         timeMessage = font.render("paliwo ", 1, (255,255,255), (0, 0, 0))
         screen.blit(timeMessage, (0, 0))
         font = pygame.font.Font("ARCADECLASSIC.TTF", 30)
-        timeMessage = font.render(str(time), 1, (255,255,255), (0, 0, 0))
-        screen.blit(timeMessage, (30, 30))
+        if(time<10):
+            timeMessage = font.render("0" + str(time), 1, (255,255,255), (0, 0, 0))
+        else:
+            timeMessage = font.render(str(time), 1, (255,255,255), (0, 0, 0))
+        screen.blit(timeMessage, (35, 30))
 
         #czas - 1s
         if pygame.event.get(timer):
@@ -205,7 +214,7 @@ while 1:
 
     if time == 0:
         font = pygame.font.Font("ARCADECLASSIC.TTF", 30)
-        timeMessage = font.render("0", 1, (255,255,255), (0, 0, 0))
+        timeMessage = font.render("00", 1, (255,255,255), (0, 0, 0))
         screen.blit(timeMessage, (30, 30))
 
     font = pygame.font.Font("ARCADECLASSIC.TTF", 64)
