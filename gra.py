@@ -43,6 +43,7 @@ class Gra:
     losujAuto = 0
     losujX = 0
     szybkosc = 20
+    addTime = 0
     j=0
     i=0
     k=0
@@ -50,7 +51,7 @@ class Gra:
     m=0
     autoSzybkosc=20
     predkoscPaliwa = 0
-    time = 10 #czas gry (paliwo)
+    time = 20 #czas gry (paliwo)
 
     #timer
     timer = USEREVENT + 1
@@ -150,7 +151,10 @@ class Gra:
                         self.koniec = True
                         self.time = 0
                     if self.showTime:
+                        self.addTime += 1
+                    if self.addTime == 2:
                         self.showTime = False
+                        self.addTime = 0
 
                 #odświeżanie czasu
                 timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("paliwo ", 1, (255,255,255), (0, 0, 0))
@@ -200,25 +204,34 @@ class Gra:
                         (self.auto.zwrocX()+50 >= self.paliwo.zwrocX() and self.auto.zwrocX() <= self.paliwo.zwrocX()+64):
                     self.paliwo.ustawStatus()
                     self.paliwo.ustawPozycje(0, 0)
-                    print self.time
                     self.time += 3
+                    self.showTime = True
 
                 #odświeżanie ekranu
                 pygame.display.flip()
 
                 #iwenty czyli sterowanie
+                '''keys = pygame.key.get_pressed()
+    if keys[K_A]:
+        vel_x = -1
+    if keys[K_D]:
+        vel_x = 1
+    if keys[K_W]:
+        vel_y = -1
+    if keys[K_S]:
+        vel_y = 1'''
+                keys = pygame.key.get_pressed()
+                if keys[K_LEFT]:
+                    if self.auto.zwrocX()>120:
+                        self.auto.ustawPozycje(self.auto.zwrocX()-5, 460)
+                if keys[K_RIGHT]:
+                    if self.auto.zwrocX()<620:
+                        self.auto.ustawPozycje(self.auto.zwrocX()+5, 460)
+
+                if keys[K_ESCAPE]:
+                    pygame.quit()
+
                 for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key==pygame.K_LEFT:
-                            if self.auto.zwrocX()>120:
-                                self.auto.ustawPozycje(self.auto.zwrocX()-20, 460)
-                        elif event.key==pygame.K_RIGHT:
-                            if self.auto.zwrocX()<620:
-                                self.auto.ustawPozycje(self.auto.zwrocX()+20, 460)
-                        elif event.key == pygame.K_ESCAPE:
-                            pygame.quit()
-
-
                     #wyłaczanie przez X
                     if event.type==pygame.QUIT:
                         pygame.quit()
@@ -245,7 +258,7 @@ class Gra:
                         self.samochody[self.losujAuto].ustawStatus()
                         self.status = True
                         self.statusPaliwa = 0
-                        self.time = 10
+                        self.time = 20
                         self.paliwo.ustawStatus()
 
                     #wyjscie z gry
