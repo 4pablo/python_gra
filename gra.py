@@ -143,6 +143,7 @@ class Gra:
 
                 if self.paliwo.zwrocY()>600:
                     self.paliwo.ustawStatus()
+                    self.paliwo.ustawPozycje(0,0)
 
                 if self.paliwo.zwrocStatus() == True:
                     self.paliwo.rysuj(screen)
