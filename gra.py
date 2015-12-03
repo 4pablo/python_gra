@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import random, obiekt
+import random, obiekt, os.path
 from obiekt import *
 from random import randint
 
@@ -52,6 +52,7 @@ class Gra:
     autoSzybkosc=20
     predkoscPaliwa = 0
     time = 20 #czas gry (paliwo)
+    wynik = 0
 
     #timer
     timer = USEREVENT + 1
@@ -76,7 +77,7 @@ class Gra:
                     if event.type == pygame.KEYDOWN:
                         if event.key==pygame.K_SPACE:
                             self.start = True
-                            pygame.mixer.music.play()
+                            pygame.mixer.music.play(-1)
 
             #gra
             while self.koniec == False:
@@ -84,6 +85,10 @@ class Gra:
                 #rysowanie podstawowych elementów (mapa, pas, drzewa, auto, glosnik)
                 for obiekt in self.obiekty:
                     obiekt.rysuj(screen)
+
+                #prostokąty
+                #pygame.draw.rect(screen, (0, 0, 0), (0, 0, 105, 60))
+                #pygame.draw.rect(screen, (0, 0, 0), (0, 540, 105, 60))
 
                 # animacja pasow na drodze
                 if self.i == self.szybkosc/3:
@@ -131,7 +136,7 @@ class Gra:
 
                 #PALIWO
                 losuj = randint(0,1000)
-                if self.paliwo.zwrocStatus() == False and losuj < 5:
+                if self.paliwo.zwrocStatus() == False and losuj < 7:
                     self.paliwo.ustawPozycje(randint(120,600), -64)
                     self.predkoscPaliwa = randint(20,50) / 10
                     self.paliwo.ustawStatus(True)
@@ -145,6 +150,7 @@ class Gra:
 
                 #odejmij sekunde od czasu
                 if pygame.event.get(self.timer):
+                    self.wynik += 10
                     if self.time > 1:
                         self.time -= 1
                     else:
@@ -157,21 +163,40 @@ class Gra:
                         self.addTime = 0
 
                 #odświeżanie czasu
-                timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("paliwo ", 1, (255,255,255), (0, 0, 0))
+                timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("paliwo ", 1, (255,255,255))
                 screen.blit(timeMessage, (0, 0))
 
                 #dodaj 0 do czasu jeśli mniejsze od 10 (09 zamiast 9)
                 if(self.time<10):
-                    timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("0" + str(self.time), 1, (255,255,255), (0, 0, 0))
+                    timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("0" + str(self.time), 1, (255,255,255))
 
                 else:
-                    timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render(str(self.time), 1, (255,255,255), (0, 0, 0))
+                    timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render(str(self.time), 1, (255,255,255))
                 screen.blit(timeMessage, (35, 30))
 
                 if self.showTime == True:
-                    addTime = self.ustawCzcionke(None, 32).render("+3", 1, (255, 0, 255))
+                    addTime = self.ustawCzcionke(None, 32).render("+5", 1, (255, 0, 255))
                     screen.blit(addTime, (self.auto.zwrocX()+70, self.auto.zwrocY()+20))
 
+                #punkty
+                napis = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("wynik", 1, (255, 255, 255))
+                screen.blit(napis, (0, 540))
+
+                pkt =  self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render(str(self.wynik), 1, (255, 255, 255))
+                screen.blit(pkt, (0, 570))
+
+                #najlepszy wynik
+                if(os.path.exists("wyniki.bin")):
+                        with open("wyniki.bin", "r") as f:
+                            best = f.read()
+                else:
+                    best = 0
+
+                napis = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("best", 1, (255, 255, 255))
+                screen.blit(napis, (700, 540))
+
+                pkt =  self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render(str(best), 1, (255, 255, 255))
+                screen.blit(pkt, (700, 570))
 
                 #włączanie/wyłaczanie muzyki
                 x, y = pygame.mouse.get_pos()
@@ -204,11 +229,8 @@ class Gra:
                         (self.auto.zwrocX()+50 >= self.paliwo.zwrocX() and self.auto.zwrocX() <= self.paliwo.zwrocX()+64):
                     self.paliwo.ustawStatus()
                     self.paliwo.ustawPozycje(0, 0)
-                    self.time += 3
+                    self.time += 5
                     self.showTime = True
-
-                #odświeżanie ekranu
-                pygame.display.flip()
 
                 #iwenty czyli sterowanie
                 keys = pygame.key.get_pressed()
@@ -227,6 +249,24 @@ class Gra:
                     if event.type==pygame.QUIT:
                         pygame.quit()
                         exit(0)
+
+                #zapisanie wyniku
+                if(self.koniec):
+                    if(os.path.exists("wyniki.bin")):
+                        with open("wyniki.bin", "r") as f:
+                            high = f.read()
+
+                    else:
+                        high = 0
+
+                    if self.wynik > int(high):
+                        with open('wyniki.bin', 'w') as f:
+                            f.write(str(self.wynik))
+
+
+                #odświeżanie ekranu
+                pygame.display.flip()
+
 
 
         #przegrana
@@ -251,7 +291,9 @@ class Gra:
                         self.statusPaliwa = 0
                         self.time = 20
                         self.paliwo.ustawStatus()
+                        self.paliwo.ustawPozycje(0, 0)
                         self.showTime = False
+                        self.wynik = 0
 
                     #wyjscie z gry
                     if event.key==pygame.K_ESCAPE:
