@@ -53,10 +53,11 @@ class Gra:
     predkoscPaliwa = 0
     time = 20 #czas gry (paliwo)
     wynik = 0
+    sekunda = 0
 
     #timer
     timer = USEREVENT + 1
-    pygame.time.set_timer(timer, 1000)
+    pygame.time.set_timer(timer, 100)
 
     def graj(self):
 
@@ -151,17 +152,21 @@ class Gra:
 
                 #odejmij sekunde od czasu
                 if pygame.event.get(self.timer):
-                    self.wynik += 10
-                    if self.time > 1:
-                        self.time -= 1
+                    self.wynik += 1
+                    if self.sekunda < 10:
+                        self.sekunda += 1
                     else:
-                        self.koniec = True
-                        self.time = 0
-                    if self.showTime:
-                        self.addTime += 1
-                    if self.addTime == 2:
-                        self.showTime = False
-                        self.addTime = 0
+                        if self.time > 1:
+                            self.time -= 1
+                        else:
+                            self.koniec = True
+                            self.time = 0
+                        if self.showTime:
+                            self.addTime += 1
+                        if self.addTime == 2:
+                            self.showTime = False
+                            self.addTime = 0
+                        self.sekunda = 0
 
                 #odświeżanie czasu
                 timeMessage = self.ustawCzcionke("ARCADECLASSIC.TTF", 30).render("paliwo ", 1, (255,255,255))
