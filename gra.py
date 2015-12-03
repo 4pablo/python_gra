@@ -211,15 +211,6 @@ class Gra:
                 pygame.display.flip()
 
                 #iwenty czyli sterowanie
-                '''keys = pygame.key.get_pressed()
-    if keys[K_A]:
-        vel_x = -1
-    if keys[K_D]:
-        vel_x = 1
-    if keys[K_W]:
-        vel_y = -1
-    if keys[K_S]:
-        vel_y = 1'''
                 keys = pygame.key.get_pressed()
                 if keys[K_LEFT]:
                     if self.auto.zwrocX()>120:
@@ -260,6 +251,7 @@ class Gra:
                         self.statusPaliwa = 0
                         self.time = 20
                         self.paliwo.ustawStatus()
+                        self.showTime = False
 
                     #wyjscie z gry
                     if event.key==pygame.K_ESCAPE:
