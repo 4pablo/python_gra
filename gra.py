@@ -248,13 +248,12 @@ class Gra:
                         self.auto.ustawPozycje(self.auto.zwrocX()+5, 460)
 
                 if keys[K_ESCAPE]:
-                    pygame.quit()
+                    return
 
                 for event in pygame.event.get():
                     #wyłaczanie przez X
                     if event.type==pygame.QUIT:
-                        pygame.quit()
-                        exit(0)
+                        return
 
                 #zapisanie wyniku
                 if(self.koniec):
@@ -271,7 +270,7 @@ class Gra:
 
 
                 #odświeżanie ekranu
-                pygame.display.flip()
+                pygame.display.update()
 
 
 
@@ -303,8 +302,7 @@ class Gra:
 
                     #wyjscie z gry
                     if event.key==pygame.K_ESCAPE:
-                        pygame.quit()
-                        exit(0)
+                        return
 
     def ladujMuzyke(self, sciezka):
         pygame.mixer.music.load(sciezka)

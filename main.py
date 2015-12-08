@@ -6,3 +6,5 @@ from gra import *
 gra = Gra()
 
 gra.graj()
+
+exit(0)
