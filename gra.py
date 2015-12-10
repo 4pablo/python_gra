@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import random, obiekt, os.path
+import random, obiekt, bitmapa, prostokat, os.path
 from obiekt import *
+from bitmapa import *
+from prostokat import *
 from random import randint
 
 pygame.init()
@@ -12,23 +14,24 @@ pygame.mixer.init()
 class Gra:
 
     #obiekty
-    mapa = obiekt("images/droga.jpg")
-    paski = obiekt("images/paski.png")
-    drzewo = obiekt("images/drzewa.png")
-    glosnik = obiekt("grafika/audio.png", 735, 5)
-    krzyzyk = obiekt("grafika/off.png", 735, 5)
-    auto = obiekt("images/auto.png", 440, 460)
-    paliwo = obiekt("grafika/gas.png")
+    mapa = Bitmapa("images/droga.jpg")
+    paski = Bitmapa("images/paski.png")
+    drzewo = Bitmapa("images/drzewa.png")
+    glosnik = Bitmapa("grafika/audio.png", 735, 5)
+    krzyzyk = Bitmapa("grafika/off.png", 735, 5)
+    auto = Bitmapa("images/auto.png", 440, 460)
+    paliwo = Bitmapa("grafika/gas.png")
     paliwo.przeksztalcObraz(64, 64)
     paliwo.ustawStatus()
+    prostokat = Prostokat((0, 0, 0), 36, 36, 733, 3)
 
-    obiekty = [mapa, paski, drzewo, auto, glosnik]
+    obiekty = [mapa, paski, drzewo, auto, prostokat, glosnik]
 
     #utworzenie przeszkód
     samochody = []
 
     for i in range(2, 7):
-        samochody.append(obiekt("grafika/auto" + str(i) + ".png"))
+        samochody.append(Bitmapa("grafika/auto" + str(i) + ".png"))
 
     #booleany
     wycisz = False

@@ -5,14 +5,10 @@ import pygame
 from pygame import *
 
 class obiekt:
-    def __init__(self, obraz, x = 0, y = 0, status = False):
-        self.obraz = pygame.image.load(obraz)
+    def __init__(self, x = 0, y = 0, status = False):
         self.x = x
         self.y = y
         self.status = status
-
-    def rysuj(self, ekran):
-        ekran.blit(self.obraz, (self.x, self.y))
 
     def ustawPozycje(self, x, y):
         self.x = x
@@ -32,6 +28,3 @@ class obiekt:
 
     def zwrocStatus(self):
         return self.status
-
-    def przeksztalcObraz(self, w, h):
-        self.obraz = pygame.transform.scale(self.obraz, (64, 64))
